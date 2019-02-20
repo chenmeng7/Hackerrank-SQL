@@ -1,0 +1,10 @@
+/*
+Enter your query here.
+Please append a semicolon ";" at the end of the query and enter your query in a single line to avoid error.
+*/
+SELECT b.hacker_id, b.name, b.total_score FROM
+(SELECT a.hacker_id, h.name, SUM(a.max_score) AS total_score FROM
+(SELECT hacker_id, challenge_id, MAX(score) AS max_score FROM Submissions GROUP BY hacker_id, challenge_id) a JOIN Hackers h ON a.hacker_id = h.hacker_id 
+GROUP By a.hacker_id, h.name) b
+WHERE total_score > 0
+ORDER BY b.total_score DESC, b.hacker_id;
