@@ -1,0 +1,12 @@
+/*
+Enter your query here.
+Please append a semicolon ";" at the end of the query and enter your query in a single line to avoid error.
+*/
+select id, age, coins_needed, power from wands w 
+join wands_property wp on w.code = wp.code
+where coins_needed =
+(select min(w1.coins_needed) from wands w1 join wands_property wp1 on w1.code = wp1.code
+where w.power = w1.power and wp.age = wp1.age and wp1.is_evil = 0
+group by w1.power, w1.code
+)
+order by power desc, age desc;
